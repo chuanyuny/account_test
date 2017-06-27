@@ -1,11 +1,15 @@
 #-*- coding:utf-8 -*-
 '''0003 账户状态规则集成测试'''
 '''具体的账户状态等于时，设为呆账还是正常根据具体情况修改代码'''
+
 import unittest
 import itertools
 import json
 import codecs
 import sys
+from HTMLTestRunner import HTMLTestRunner
+import time
+
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -137,8 +141,15 @@ if __name__=='__main__':
 	suite=unittest.TestSuite()
 	suite.addTest(Countstatus("test_1"))
 	suite.addTest(Countstatus("test_2"))
-	runner=unittest.TextTestRunner()
+	# runner=unittest.TextTestRunner()
+	# runner.run(suite)
+	now=time.strftime("%Y-%m-%d %H_%M_%S")
+	filename='./'+now+'result.html'
+	fp=open(filename,'wb')
+	runner=HTMLTestRunner(stream=fp,title='账户测试报告',description='用例执行情况：')
 	runner.run(suite)
+	fp.close()
+	
 
 
 
